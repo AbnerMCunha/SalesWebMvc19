@@ -371,3 +371,8 @@ C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebM
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Departments\Details.cshtml.g.cs
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Departments\Edit.cshtml.g.cs
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Departments\Index.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Sellers\Index.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Sellers\Create.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Sellers\Delete.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Sellers\Details.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SWM19\SalesWebMvc19\SalesWebMvc19\obj\Debug\net461\Razor\Views\Sellers\Edit.cshtml.g.cs

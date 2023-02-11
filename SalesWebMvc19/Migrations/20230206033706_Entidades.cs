@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SalesWebMvc19.Migrations
 {
-    public partial class Entities : Migration
+    public partial class Entidades : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,12 +27,11 @@ namespace SalesWebMvc19.Migrations
                 {
                     IdSeller = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 60, nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     DateBirth = table.Column<DateTime>(nullable: false),
                     BaseSalary = table.Column<double>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: true),
-                    DeparmentID = table.Column<int>(nullable: false)
+                    DepartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,25 +41,25 @@ namespace SalesWebMvc19.Migrations
                         column: x => x.DepartmentId,
                         principalTable: "Department",
                         principalColumn: "IdDepartment",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SalesRecords",
+                name: "SalesRecord",
                 columns: table => new
                 {
                     IdSale = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SellerId = table.Column<int>(nullable: true),
                     DateSale = table.Column<DateTime>(nullable: false),
+                    SellerId = table.Column<int>(nullable: true),
                     SalesStatus = table.Column<int>(nullable: false),
                     Amount = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SalesRecords", x => x.IdSale);
+                    table.PrimaryKey("PK_SalesRecord", x => x.IdSale);
                     table.ForeignKey(
-                        name: "FK_SalesRecords_Seller_SellerId",
+                        name: "FK_SalesRecord_Seller_SellerId",
                         column: x => x.SellerId,
                         principalTable: "Seller",
                         principalColumn: "IdSeller",
@@ -68,8 +67,8 @@ namespace SalesWebMvc19.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesRecords_SellerId",
-                table: "SalesRecords",
+                name: "IX_SalesRecord_SellerId",
+                table: "SalesRecord",
                 column: "SellerId");
 
             migrationBuilder.CreateIndex(
@@ -81,7 +80,7 @@ namespace SalesWebMvc19.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SalesRecords");
+                name: "SalesRecord");
 
             migrationBuilder.DropTable(
                 name: "Seller");

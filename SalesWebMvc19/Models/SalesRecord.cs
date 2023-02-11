@@ -11,12 +11,14 @@ namespace SalesWebMvc19.Models {
         [Key]
         [Column("IdSale")]
         public int Id { get; set; }
-        public Seller Seller { get; set; }
 
         [Column("DateSale")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
+
+        public Seller Seller { get; set; }
+
         public SaleStatus SalesStatus { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:F2")]
@@ -26,7 +28,7 @@ namespace SalesWebMvc19.Models {
         {
         }
 
-        public SalesRecord(int id, Seller seller, DateTime date, SaleStatus salesStatus, double amount)
+        public SalesRecord(int id, DateTime date, double amount, SaleStatus salesStatus, Seller seller )
         {
             Id = id;
             Seller = seller;

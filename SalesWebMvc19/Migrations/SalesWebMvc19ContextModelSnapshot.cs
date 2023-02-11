@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SalesWebMvc19.Data;
+using SalesWebMvc19.Models;
 
 namespace SalesWebMvc19.Migrations
 {
@@ -49,7 +49,7 @@ namespace SalesWebMvc19.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("SalesRecords");
+                    b.ToTable("SalesRecord");
                 });
 
             modelBuilder.Entity("SalesWebMvc19.Models.Seller", b =>
@@ -64,10 +64,12 @@ namespace SalesWebMvc19.Migrations
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("Email");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasMaxLength(60);
 
                     b.HasKey("Id");
 

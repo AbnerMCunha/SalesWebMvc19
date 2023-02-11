@@ -8,7 +8,7 @@ namespace SalesWebMvc19.Models.Enums {
     public enum SaleStatus : int{
         Pending = 1,
         Billed = 2,
-        Closed = 3,
+        Canceled = 3,
 
     }
 }

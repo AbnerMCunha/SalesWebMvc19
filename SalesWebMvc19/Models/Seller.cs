@@ -10,12 +10,16 @@ namespace SalesWebMvc19.Models {
         [Key]
         [Column("IdSeller")]
         public int Id { get; set; }
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        [Column("Name")]
+        [Required(ErrorMessage = "{0} required")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        public string Name { get; set; }
+
+        //[Required(ErrorMessage = "{0} required")]
+        [EmailAddress(ErrorMessage = "Enter a valid email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
         [Display(Name = "Date Birth")]
         [DataType(DataType.Date)]
@@ -33,11 +37,11 @@ namespace SalesWebMvc19.Models {
         {
         }
 
-        public Seller(int id, string firstName, string lastName, DateTime dateBirth, double baseSalary, Department department, int deparmentID)
+        public Seller(int id, string name, string email, DateTime dateBirth, double baseSalary, Department department)
         {
             Id = id;
-            FirstName = firstName;
-            LastName = lastName;
+            Name = name;
+            Email = email;
             DateBirth = dateBirth;
             BaseSalary = baseSalary;
             Department = department;
@@ -51,6 +55,10 @@ namespace SalesWebMvc19.Models {
         public void addSales(SalesRecord sale)
         {
             Sales.Add(sale);
+        }
+        public void Removesales(SalesRecord sale)
+        {
+            Sales.Remove(sale);
         }
 
     }

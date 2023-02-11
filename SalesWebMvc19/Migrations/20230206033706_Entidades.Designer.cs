@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SalesWebMvc19.Data;
+using SalesWebMvc19.Models;
 
 namespace SalesWebMvc19.Migrations
 {
     [DbContext(typeof(SalesWebMvc19Context))]
-    [Migration("20230205202510_Entities")]
-    partial class Entities
+    [Migration("20230206033706_Entidades")]
+    partial class Entidades
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace SalesWebMvc19.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("SalesRecords");
+                    b.ToTable("SalesRecord");
                 });
 
             modelBuilder.Entity("SalesWebMvc19.Models.Seller", b =>
@@ -64,14 +64,14 @@ namespace SalesWebMvc19.Migrations
 
                     b.Property<DateTime>("DateBirth");
 
-                    b.Property<int>("DeparmentID");
+                    b.Property<int>("DepartmentId");
 
-                    b.Property<int?>("DepartmentId");
+                    b.Property<string>("Email");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasMaxLength(60);
 
                     b.HasKey("Id");
 
@@ -91,7 +91,8 @@ namespace SalesWebMvc19.Migrations
                 {
                     b.HasOne("SalesWebMvc19.Models.Department", "Department")
                         .WithMany("Sellers")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
