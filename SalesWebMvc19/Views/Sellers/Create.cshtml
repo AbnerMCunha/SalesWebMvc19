@@ -1,4 +1,47 @@
 ﻿@model SalesWebMvc19.Models.Seller
 
 @{
+    ViewData["Title"] = "Create Seller";
 }
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+     <div class="col-md-4">
+         <form asp-action="Create">
+             <div class="form-control">
+                 <label asp-for="Name" class="control-label"></label>
+                 <input asp-for="Name" class="form-control" />
+             </div>
+
+
+             <div class="form-control">
+                 <label asp-for="Email" class="control-label"></label>
+                 <input asp-for="Email" class="form-control" />
+             </div>
+
+             <div class="form-control">
+                 <label asp-for="DateBirth" class="control-label"></label>
+                 <input asp-for="DateBirth" class="form-control" />
+             </div>
+
+             <div class="form-control">
+                 <label asp-for="BaseSalary" class="control-label"></label>
+                 <input asp-for="BaseSalary" class="form-control" />
+             </div>
+
+             @*<div class="form-control">
+                 <label asp-for="Department" class="control-label"></label>
+                 <input asp-for="Department" class="form-control" />
+             </div>*@
+
+             <div class="form-group">
+                 <input type="submit" value="Create" class="btn-primary" />
+             </div>
+
+
+
+         </form>
+     </div>
+
+</div>

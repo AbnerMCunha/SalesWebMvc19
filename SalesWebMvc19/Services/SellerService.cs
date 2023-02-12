@@ -20,5 +20,12 @@ namespace SalesWebMvc19.Services {
             return _context.Seller.ToList();
         }
 
+        public void Insert(Seller seller)
+        {
+            //seller.Department = _context.Department.FirstOrDefault();
+            _context.Add(seller);
+            _context.SaveChanges();
+        }
+
     }
 }
