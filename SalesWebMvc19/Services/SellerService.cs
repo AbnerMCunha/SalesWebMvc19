@@ -31,5 +31,19 @@ namespace SalesWebMvc19.Services {
             _context.SaveChanges();
         }
 
+        public Seller FindById(int id)
+        {
+            //First 
+            return _context.Seller.FirstOrDefault(x => x.Id == id);
+
+        }
+
+        public void RemoveSeller(int sellerId)
+        {
+            var seller = FindById(sellerId);
+            _context.Seller.Remove(seller);
+            _context.SaveChanges();
+        }
+
     }
 }

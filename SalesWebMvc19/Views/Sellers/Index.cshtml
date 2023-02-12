@@ -56,6 +56,7 @@
                         @Html.DisplayFor(x => item.Department.Name)
                     </td>
                     <td>
+                        @*Asp action invocando Metodos do Controller e passando o id pelo asp-route-id referenciado o id do modelo*@
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

@@ -43,5 +43,30 @@ namespace SalesWebMvc19.Controllers {
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            //var seller = _sellerService.FindById(id.Value);
+            //var departments = _departmentService.FindAll();
+            //var vm = new SellerFormViewModel {Seller = seller, Departments = departments };
+            //return View(vm);
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id) {
+            _sellerService.RemoveSeller(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
