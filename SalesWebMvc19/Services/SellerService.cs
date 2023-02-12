@@ -23,8 +23,9 @@ namespace SalesWebMvc19.Services {
 
         public void Insert(Seller seller)
         {
-            //Gambiarra para não dar erro de chave primaria
-            seller.Department = _context.Department.FirstOrDefault();
+            //1. Gambiarra para não dar erro de chave primaria
+            //seller.Department = _context.Department.FirstOrDefault();
+            //2. Não mais necessária já que o SellerFormViewModel carrega os dados de departamentos ao funcionadio
 
             _context.Add(seller);
             _context.SaveChanges();

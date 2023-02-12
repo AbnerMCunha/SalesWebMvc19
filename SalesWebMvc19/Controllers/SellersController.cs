@@ -5,16 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using SalesWebMvc19.Services;
 using SalesWebMvc19.Models;
+using SalesWebMvc19.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SalesWebMvc19.Controllers {
     public class SellersController : Controller {
 
         private readonly SellerService _sellerService;
+        private readonly DepartmentService _departmentService;
 
-        public SellersController(SellerService sellerService)
+        public SellersController(SellerService sellerService, DepartmentService departmentService)
         {
             _sellerService = sellerService;
+            _departmentService = departmentService;
         }
 
         public IActionResult Index()
@@ -25,7 +28,12 @@ namespace SalesWebMvc19.Controllers {
 
         public IActionResult Create()
         {
-            return View();
+            //Instanciar todos os departamentos registrados no banco de dados
+            var departments = _departmentService.FindAll();
+            //Intanciar sellerViewModel com a lista de todos os departametos como atributo da ViewModel
+            var TelaDeSeller = new SellerFormViewModel{ Departments= departments};
+            //Passar a ViewModel no Retorno da View.
+            return View(TelaDeSeller);
         }
 
         [HttpPost]
