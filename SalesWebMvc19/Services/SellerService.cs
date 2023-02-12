@@ -17,12 +17,15 @@ namespace SalesWebMvc19.Services {
 
         public List<Seller> FindAll()
         {
-            return _context.Seller.ToList();
+            //Include realiza o Join dos Models Seller e Department
+            return _context.Seller.Include(x => x.Department).ToList();
         }
 
         public void Insert(Seller seller)
         {
-            //seller.Department = _context.Department.FirstOrDefault();
+            //Gambiarra para não dar erro de chave primaria
+            seller.Department = _context.Department.FirstOrDefault();
+
             _context.Add(seller);
             _context.SaveChanges();
         }
