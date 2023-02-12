@@ -33,9 +33,10 @@ namespace SalesWebMvc19.Services {
 
         public Seller FindById(int id)
         {
-            //First 
-            return _context.Seller.FirstOrDefault(x => x.Id == id);
-
+            //FirstOrDefault: Caso não encontre, devolve um valor padrao
+            //Eager loading: fazendo o join de tabelas relacionadas, no caso, departamento. já feito no metodo FindALl()
+            return _context.Seller.Include(x => x.Department).
+                FirstOrDefault(x => x.Id == id);
         }
 
         public void RemoveSeller(int sellerId)
