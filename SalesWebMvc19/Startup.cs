@@ -9,6 +9,10 @@ using SalesWebMvc19.Data;
 using SalesWebMvc19.Models;
 using SalesWebMvc19.Services;
 
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using System.Collections.Generic;
+
 namespace SalesWebMvc19 {
     public class Startup {
         public Startup(IConfiguration configuration)
@@ -44,8 +48,19 @@ namespace SalesWebMvc19 {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService )
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
+            //Definindo opção de localização
+            var enUs = new CultureInfo("en-US");
+            var LocalizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(enUs),
+                SupportedCultures = new List<CultureInfo> { enUs },
+                SupportedUICultures = new List<CultureInfo> { enUs }
+            };
+            app.UseRequestLocalization(LocalizationOptions);
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

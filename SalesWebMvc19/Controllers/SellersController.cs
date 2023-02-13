@@ -135,24 +135,14 @@ namespace SalesWebMvc19.Controllers {
         public IActionResult Error(string message, int? id)
         {
             //Definindo a message de erro personalizada de acorodo com cada contexto
-            //
-            if (id != null) {
-                var vm = new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    Message = message,
-                    Id = id.Value
-                };
-                return View(vm);
-            }
-            else {
-                var vm = new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    Message = message                    
-                };
-                return View(vm);
-            }
+            //fazendo instancia condicionaldo Id
+
+            var vm = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                Message = message                    
+            };                
+            return View(vm);
         }
 
     }

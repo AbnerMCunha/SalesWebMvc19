@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesWebMvc19.Models {
     public class Department {
-        [Key]
-        [Column("IdDepartment")]
+        [Key]                           //Definindo a chave para criacao do BD pelo provider MySql do EntityFramework
+        [Column("IdDepartment")]        //Definindo o nome da coluna da tabela Department no banco de dados
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Seller> Sellers { get; set; } = new List<Seller>();

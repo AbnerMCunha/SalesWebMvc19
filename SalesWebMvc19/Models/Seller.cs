@@ -7,23 +7,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesWebMvc19.Models {
     public class Seller {
-        [Key]
-        [Column("IdSeller")]
+        [Key]                                                   //Definindo a chave na tabela a ser criada com base na classe
+        [Column("IdSeller")]                                    //Definindo o nome da coluna no Banco de dados
         public int Id { get; set; }
 
         [Column("Name")]
-        [Required(ErrorMessage = "{0} required")]
+        [Required(ErrorMessage = "{0} required")]               //Definindo como not null
         [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
         public string Name { get; set; }
 
         //[Required(ErrorMessage = "{0} required")]
-        [EmailAddress(ErrorMessage = "Enter a valid email")]
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Enter a valid email")]    //Validação de email
+        [DataType(DataType.EmailAddress)]                       //Definindo o Tipo do dado com email, gerando um link do endereço
         public string Email { get; set; }
 
-        [Display(Name = "Date Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Date Birth")]                          //Nome a ser exibido no label do Campo
+        [DataType(DataType.Date)]                               //Define o Tipo de do campo
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]    //Defini a formatação a ser exibido o campo
         public DateTime DateBirth { get; set; }
 
         [Display(Name = "Base Salary")]
