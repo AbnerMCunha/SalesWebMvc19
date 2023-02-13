@@ -30,18 +30,20 @@ namespace SalesWebMvc19.Controllers {
 
         public IActionResult Create()
         {
-            //Instanciar todos os departamentos registrados no banco de dados
-            var departments = _departmentService.FindAll();
-            //Intanciar sellerViewModel com a lista de todos os departametos como atributo da ViewModel
-            var TelaDeSeller = new SellerFormViewModel { Departments = departments };
+            //Instanciando uma view Model já carrecagada com uma lista contendo todos os departamentos
+            var vm = new SellerFormViewModel { Departments = _departmentService.FindAll() };
             //Passar a ViewModel no Retorno da View.
-            return View(TelaDeSeller);
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)    //Se formularario nao tiver sido validado(com as validações dos campops, retornar ao formulario)
+            {
+                return View(seller);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -97,15 +99,20 @@ namespace SalesWebMvc19.Controllers {
             {
                 return RedirectToAction(nameof(Error), new { Message = $"Seller Id: {id} Not Found" });
             }
-            var departments = _departmentService.FindAll();
-            var vm = new SellerFormViewModel { Seller = obj, Departments = departments };
-            return View(vm);
+            //Instanciando uma view Model já carrecagada o proprio vendedor em ediação e com uma lista contendo todos os departamentos
+            var vmComVendedor = new SellerFormViewModel { Seller = obj, Departments = _departmentService.FindAll() };
+            return View(vmComVendedor);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)    //int id
         {
+            if (!ModelState.IsValid)    //Se formularario nao tiver sido validado(com as validações dos campops, retornar ao formulario)
+            {
+                return View(seller);
+            }
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { Message = "Id Mismatch" });
@@ -140,11 +147,25 @@ namespace SalesWebMvc19.Controllers {
             var vm = new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                Message = message                    
-            };                
+                Message = message
+            };
             return View(vm);
         }
 
+        //public SellerFormViewModel CarregaVmSellerDepartment(Seller? seller)//Carregando a View Model de SellerViewModel com os dados de departameto pois é utilizada mais de uma vez;
+        //{
+        //    if(seller == null) { 
+        //        //Instanciando uma view Model já carrecagada com uma lista contendo todos os departamentos
+        //        var TelaDeSeller = new SellerFormViewModel { Departments = _departmentService.FindAll() };
+        //        return TelaDeSeller;
+        //    }else 
+        //    {
+        //        //Instanciando uma view Model já carrecagada com uma lista contendo todos os departamentos
+        //        var TelaDeSeller = new SellerFormViewModel { Seller =seller, Departments = _departmentService.FindAll() };
+        //        return TelaDeSeller;
+
+        //    }
+        //}
     }
 
 }

@@ -12,11 +12,10 @@ namespace SalesWebMvc19.Models {
         public int Id { get; set; }
 
         [Column("Name")]
-        [Required(ErrorMessage = "{0} required")]               //Definindo como not null
-        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [Required(ErrorMessage = "{0} required")]               //Validação: Definindo como not null
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]  //Definiçoes de Limitações para o campo, {0} pega o nome do atributo, {1} o tamanho maximo no primeiro argumento , {2} o tamanho minimo no segundo argumento
         public string Name { get; set; }
 
-        //[Required(ErrorMessage = "{0} required")]
         [EmailAddress(ErrorMessage = "Enter a valid email")]    //Validação de email
         [DataType(DataType.EmailAddress)]                       //Definindo o Tipo do dado com email, gerando um link do endereço
         public string Email { get; set; }
@@ -28,6 +27,7 @@ namespace SalesWebMvc19.Models {
 
         [Display(Name = "Base Salary")]
         [DataType(DataType.Currency)]
+        [Range(100.0, 50000.0, ErrorMessage = "{0} must be between {1} and {2}!")]
         public double BaseSalary { get; set; }
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
