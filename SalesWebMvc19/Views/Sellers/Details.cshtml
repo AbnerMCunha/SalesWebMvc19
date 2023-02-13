@@ -48,10 +48,12 @@
         </dd>
 
     </dl>
-    <form asp-action="Edit">
-        <input type="hidden" asp-for="Id" />@*Aqui se passa o Id do Seller como parametro*@
-        <!--<input type="submit" value="Edit" class="btn btn-danger" />-->   @*Testar isso*@
-        <input type="submit" value="" asp-route="Id" class="btn btn-primary" />
+    <form>
+
+        @*asp-route-id="@Model.Id": passa o Id do Model*@
+        @*class="btn btn-danger":   Define aparencia de botao*@
+        @*asp-action:               Define a view que será aberta*@
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-danger">Edit</a>
         <input type="submit" value="Cancel" asp-action="Index" class="btn btn-primary" />
     </form>
 </div>
