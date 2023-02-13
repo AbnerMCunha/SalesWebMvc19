@@ -72,8 +72,14 @@ namespace SalesWebMvc19.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _sellerService.RemoveSellerAsync(id);
-            return RedirectToAction(nameof(Index));
+            try { 
+                await _sellerService.RemoveSellerAsync(id);
+                return RedirectToAction(nameof(Index));
+            }catch(IntegrityException e)    //Recebendo a exceção persolizada inserida pelo SellerService
+            {
+                //Redirecionando a exceção com mensagem persolizada.
+                return RedirectToAction(nameof(Error), new { Message = "Cant Delete Seller, because He/She has Linked Sales."});
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -134,7 +140,7 @@ namespace SalesWebMvc19.Controllers {
             {
                 return RedirectToAction(nameof(Error), new { Message = e.Message });
             }
-            catch (DbConcurrencyExcption e)
+            catch (DbConcurrencyExecption e)
             {
                 //return RedirectToAction(Error(message));
                 //return NotFound();

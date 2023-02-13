@@ -27,7 +27,7 @@ namespace SalesWebMvc19.Services {
             //seller.Department = _context.Department.FirstOrDefault();
             //2. Não mais necessária já que o SellerFormViewModel carrega os dados de departamentos ao funcionadio
 
-            _context.AddAsync(seller);
+            _context.AddAsync(seller);          //Essa operação linq não necessida ter o await pois nao executa a pesquisa, apenas deixa pronta
             await _context.SaveChangesAsync();
         }
 
@@ -41,9 +41,14 @@ namespace SalesWebMvc19.Services {
 
         public async Task RemoveSellerAsync(int sellerId)
         {
-            var seller = await _context.Seller.FindAsync(sellerId);
-             _context.Seller.Remove(seller);
-            await _context.SaveChangesAsync();
+            try { 
+                var seller = await _context.Seller.FindAsync(sellerId);
+                 _context.Seller.Remove(seller);        //Essa operação linq não necessida ter o await pois nao executa a pesquisa, apenas deixa pronta
+                await _context.SaveChangesAsync();
+            }catch(DbUpdateException e) //Capturando exceção de integridade referencial do sistema 
+            {
+                throw new IntegrityException(e.Message);    //e inserindo a nossa exceção, personalizada. Remetendo ao de volta controller.
+            }
         }
 
         public async Task UpdateSellerAsync(Seller obj)
@@ -57,13 +62,13 @@ namespace SalesWebMvc19.Services {
             //Segregando exceções de camadas de excção de camada de servico e camada de acesso a dados.
             try
             {
-                _context.Seller.Update(obj);
+                _context.Seller.Update(obj);            //Essa operação linq não necessida ter o await pois nao executa a pesquisa, apenas deixa pronta
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
                 //Interceptando exceção de nivel de acesso a dados e relançando para o controller, a exceção personalizada da camada de serviço.
-                throw new DbConcurrencyExcption(e.Message);
+                throw new DbConcurrencyExecption(e.Message);
             }
         }
 
