@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc19.Data;
 using SalesWebMvc19.Models;
+using SalesWebMvc19.Services.Exceptions;
 
 namespace SalesWebMvc19.Services {
     public class SellerService {
@@ -44,6 +45,29 @@ namespace SalesWebMvc19.Services {
             var seller = FindById(sellerId);
             _context.Seller.Remove(seller);
             _context.SaveChanges();
+        }
+
+        public void UpdateSeller(Seller obj)
+        {
+            //var seller = FindById(sellerId);
+            //_context.Seller.Update(seller);
+            //_context.SaveChanges();
+            if (!_context.Seller.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Seller Id not Found");
+            }
+
+            //Segregando exceções de camadas de excção de camada de servico e camada de acesso a dados.
+            try
+            {
+                _context.Seller.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                //Interceptando exceção de nivel de acesso a dados e relançando para o controller, a exceção personalizada da camada de serviço.
+                throw new DbConcurrencyExcption(e.Message);
+            }
         }
 
     }

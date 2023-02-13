@@ -50,11 +50,9 @@
     </dl>
     <form asp-action="Edit">
         <input type="hidden" asp-for="Id" />@*Aqui se passa o Id do Seller como parametro*@
-        @*<input type="submit" value="Edit" class="btn btn-danger" />   //Testar isso*@
-        <input type="submit" value="Edit" asp-route="Id" class="btn btn-primary" />
+        <!--<input type="submit" value="Edit" class="btn btn-danger" />-->   @*Testar isso*@
+        <input type="submit" value="" asp-route="Id" class="btn btn-primary" />
         <input type="submit" value="Cancel" asp-action="Index" class="btn btn-primary" />
     </form>
-
-
 </div>
 </div>

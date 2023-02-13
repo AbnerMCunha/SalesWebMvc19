@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc19.Services;
 using SalesWebMvc19.Models;
 using SalesWebMvc19.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc19.Services.Exceptions;
 
 namespace SalesWebMvc19.Controllers {
     public class SellersController : Controller {
@@ -31,7 +32,7 @@ namespace SalesWebMvc19.Controllers {
             //Instanciar todos os departamentos registrados no banco de dados
             var departments = _departmentService.FindAll();
             //Intanciar sellerViewModel com a lista de todos os departametos como atributo da ViewModel
-            var TelaDeSeller = new SellerFormViewModel{ Departments= departments};
+            var TelaDeSeller = new SellerFormViewModel { Departments = departments };
             //Passar a ViewModel no Retorno da View.
             return View(TelaDeSeller);
         }
@@ -46,7 +47,7 @@ namespace SalesWebMvc19.Controllers {
 
         public IActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -64,14 +65,15 @@ namespace SalesWebMvc19.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id) {
+        public IActionResult Delete(int id)
+        {
             _sellerService.RemoveSeller(id);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Details(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -83,5 +85,49 @@ namespace SalesWebMvc19.Controllers {
             return View(obj);
         }
 
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                throw new NotFoundException("Id não encontrado");
+            }
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                throw new NotFoundException("Vendedor não encontrado");
+            }
+            var departments = _departmentService.FindAll();
+            var vm = new SellerFormViewModel { Seller = obj, Departments = departments };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Seller seller)    //int id
+        {
+            if (id != seller.Id){
+                return BadRequest();
+            }
+            if (seller == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                _sellerService.UpdateSeller(seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyExcption)
+            {
+                return BadRequest();
+            }
+        }
+
     }
+
 }
