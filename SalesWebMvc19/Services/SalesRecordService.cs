@@ -11,7 +11,6 @@ namespace SalesWebMvc19.Services {
     public class SalesRecordService {
 
         private readonly SalesWebMvc19Context _context;
-        public int MyProperty { get; set; }
 
         public SalesRecordService(SalesWebMvc19Context context)
         {
@@ -23,10 +22,28 @@ namespace SalesWebMvc19.Services {
             return await _context.SalesRecord.FindAsync(id);
         }
 
-        public async Task<List<SalesRecord>> FindAll()
+        public async Task<List<SalesRecord>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
         {
-            return await _context.SalesRecord.Include(obj => obj.Seller).OrderByDescending(x => x.Date).ToListAsync();
+            //Operacao linq para atribuir lista de registros de SalesRecord
+            var result = from obj in _context.SalesRecord select obj;
+
+            //havendo parametros, habilitar condições
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Date >= minDate);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Date <= maxDate);
+            }
+            //Retornando consulta assincronamente com join em Seller e Departamento, e ordenando descrescemente por data.
+            return await result.Include(x => x.Seller).
+                Include(x=> x.Seller.Department).
+                OrderByDescending(x => x.Date).
+                ToListAsync();
         }
+
+
 
 
     }

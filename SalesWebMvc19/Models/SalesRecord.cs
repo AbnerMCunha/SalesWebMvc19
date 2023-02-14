@@ -21,7 +21,8 @@ namespace SalesWebMvc19.Models {
 
         public SaleStatus SalesStatus { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:F2")] //Definindo formatação de Dinheiro com 2 decimais
+        //Causa erro na 
+        [DisplayFormat(DataFormatString = "{0:F2}")] //Definindo formatação de Dinheiro com 2 decimais
         public double Amount { get; set; }
 
         public SalesRecord()
