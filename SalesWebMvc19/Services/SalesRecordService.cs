@@ -38,9 +38,36 @@ namespace SalesWebMvc19.Services {
             }
             //Retornando consulta assincronamente com join em Seller e Departamento, e ordenando descrescemente por data.
             return await result.Include(x => x.Seller).
-                Include(x=> x.Seller.Department).
+                Include(x => x.Seller.Department).
                 OrderByDescending(x => x.Date).
                 ToListAsync();
+        }
+
+
+        //Atenção para o formato de retorno, em chave, demontrando o agrupamento de Departamento por Vendas
+        public async Task<List<IGrouping<Department,SalesRecord>>> FindByDateGroupingAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            //Operacao linq para atribuir lista de registros de SalesRecord
+            var result = from obj in _context.SalesRecord select obj;
+
+            //havendo parametros, habilitar condições
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Date >= minDate);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Date <= maxDate);
+            }
+            //Retornando consulta assincronamente com join em Seller e Departamento, e ordenando descrescemente por data.
+            return await result
+                .Include(x => x.Seller)
+                .Include(x => x.Seller.Department)
+                .OrderByDescending(x => x.Date)
+                .GroupBy(x => x.Seller.Department)
+                .ToListAsync();
+                //O que faz o tipo de retorno ser Igrouping é o GroupBy de Departamentos
+
         }
 
 
